@@ -96,7 +96,6 @@ que ésta implemente la clase Comparator<T>, y deberemos definir el método **co
 		public int compare(Persona o1, Persona o2) {
 			return o1.getDni().compareToIgnoreCase(o2.getDni());
 		}
-		...
 	}
 {% endhighlight %}
 
