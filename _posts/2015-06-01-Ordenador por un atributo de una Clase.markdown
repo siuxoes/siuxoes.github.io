@@ -20,10 +20,12 @@ public class Persona{
 
     private String nombre;
     private String apellidos;
-
-    public Persona(String nombre, String apellidos) {
+	private String dni;
+	
+    public Persona(String nombre, String apellidos, String dni) {
         this.nombre = nombre;
         this.apellidos = apellidos;
+		this.dni = dni;
     }
 
     public String getNombre() {
@@ -41,6 +43,14 @@ public class Persona{
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
+	
+	public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
 
 }
 {% endhighlight %}
@@ -52,9 +62,12 @@ cualquier clase que queramos comparar.
 Al hacer esto nos dirá que debemos incorporar el metodo **compareTo(T)**:
 
 {% highlight java %}
-    public int compareTo(Persona o) {
-        return 0;
-    }
+	public class Persona implements Comparable<Persona>{
+		public int compareTo(Persona o) {
+			return 0;
+		}
+		...
+	}
 {% endhighlight %}
 
 Este es el cuerpo de método, dentro debemos indicar nuestro criterio de ordenación. Este método puede devolver:
@@ -67,15 +80,32 @@ Por lo tanto rellenando nuestro método:
 
 {% highlight java %}
     public int compareTo(Persona o) {
-        if(this.getApellidos().compareToIgnoreCase(o.getApellidos())==0){
+        if(this.getApellidos().compareToIgnoreCase(o.getApellidos())==0) {
             return this.getNombre().compareToIgnoreCase(o.getNombre());
-        }else{
+        } else {
             return this.getApellidos().compareToIgnoreCase(o.getApellidos());
         }
     }
 {% endhighlight %}
 
-Aquí [tiene][Enlace] una propuesta de solución para el problema.Éste código es funcional, resuelve el problema, pero no es eficiente ni mucho menos,
-probablemente existán mejores formas de resolver esto.
+Pero si queremos poder ordenadar por otro criterio diferente al definido en la clase por defecto, deberemos crear una clase nueva y 
+que ésta implemente la clase Comparator<T>, y deberemos definir el método **compare<T,T>**:
 
-[Enlace]: https://github.com/siuxoes/siuxoes.github.io/blob/master/Java-code/RepartiendoElBotin.java
+{% highlight java %}
+	public class OrdenarPorOtroCriterio implements Comparable<Persona>{
+		public int compare(Persona o1, Persona o2) {
+			return o1.getDni().compareToIgnoreCase(o2.getDni());
+		}
+		...
+	}
+{% endhighlight %}
+
+Y finalmente, para utilizar estos criterios de ordenadoción deberemos utulizar:
+
+{% highlight java %}
+	LinkedList<Persona> lista = new LinkedList<>();
+	Collections.sort(lista); // Ordena por apellido y si son iguales, por nombre
+	Collections.sort(lista, new OrdenarPorOtroCriterio()); // Ordenada por dni
+{% endhighlight %}
+
+
