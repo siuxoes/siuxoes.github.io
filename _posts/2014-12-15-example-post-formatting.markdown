@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Example Post Formatting" 
+title:  "sffffffff" 
 date:   2014-12-15
 ---
 
