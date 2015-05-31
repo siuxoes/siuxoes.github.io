@@ -100,12 +100,12 @@ que ésta implemente la clase Comparator<T>, y deberemos definir el método **co
 	}
 {% endhighlight %}
 
-Y finalmente, para utilizar estos criterios de ordenadoción deberemos utulizar:
+Y finalmente, para utilizar estos criterios de ordenación deberemos utulizar:
 
 {% highlight java %}
-	LinkedList<Persona> lista = new LinkedList<>();
-	Collections.sort(lista); // Ordena por apellido y si son iguales, por nombre
-	Collections.sort(lista, new OrdenarPorOtroCriterio()); // Ordenada por dni
+		LinkedList<Persona> lista = new LinkedList<>();
+		Collections.sort(lista); // Ordena por apellido y si son iguales, por nombre
+		Collections.sort(lista, new OrdenarPorOtroCriterio()); // Ordenada por dni
 {% endhighlight %}
 
 
