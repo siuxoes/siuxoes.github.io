@@ -1,48 +1,78 @@
-﻿---
+---
 layout: post
-title:  "Acepta el reto: Repartiendo el botin. 238" 
-date:   2015-05-31
+title:  "Ordenar por un atributo de una Clase" 
+date:   2015-06-01
 ---
 
 ## Enunciado:
 
-Al-Colleja y sus secuaces tienen que repartir el botín de su último golpe. No es una tarea fácil, porque todos quieren llevarse lo máximo posible, y todos están armados…
+Si alguna vez ha sentido la necesidad de ordenar una lista, por los objetos de la misma habrá podido obsevar
+que no se puede hacer direcamente **Collections.sort(Lista)**, primero debe introducir un criterio de ordenación
+en la clase.
 
-Para no entrar en discusiones que terminen en tragedia, Al-Colleja ha ideado un sencillo método en el que, en lugar de preocuparse de ser justos repartiendo en base a quién ha trabajado más en la consecución del golpe, se lo deja prácticamente todo al azar. Prefiere recibir menos beneficios pero mantener la banda intacta.
 
-El procedimiento es sencillo. Coge todos los billetes conseguidos y los pone en un montón tras barajarlos. Después se coloca toda la banda en círculo y va dando un billete a cada uno, hasta que quedan todos repartidos. Eso sí, el primero que recibe billete es él, de esa forma se asegura de que si los billetes se terminan a mitad de una vuelta, él siempre habrá recibido uno adicional.
+### Ejemplo:
 
-El componente de azar aparece porque los billetes están descolocados, así que puede tocar en el reparto desde el mísero billete de 10 hasta el deseado de 500...
-
-### Entrada:
-La entrada consta de una sucesión de casos de prueba o botines a repartir. Para cada botín aparece una primera línea que indica el numero de billetes que hay que repartir (como mucho 1.000) seguido del número de participantes en el golpe que deben recibir recompensa (no más de 10). Siempre habrá al menos un billete y al menos un villano. La segunda línea contiene tantos números como billetes, indicando su valor (todos los billetes tienen valor). El primer número expresa la cuantía del primer billete que se reparte.
-
-La entrada termina con una línea con dos ceros que no debe procesarse.
-
-### Salida:
-Para cada caso de prueba se mostrará una línea por cada participante. Cada línea tendrá un primer número indicando la cantidad de dinero recibido seguido del carácter ':' y la lista de billetes que recibe esa persona separados por espacios.
-
-Tras cada caso de prueba aparecerá una línea con tres guiones (---).
-
-### Entrada de ejemplo:
+Supongamos que tenemos la clase:
 
 {% highlight java %}
-5 2
-10 20 50 200 500
-1 2
-50
-0 0
+public class Persona{
+
+    private String nombre;
+    private String apellidos;
+
+    public Persona(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+}
 {% endhighlight %}
 
-### Entrada de Salida:
+Y queremos poder ordenador por el apellido, y si éste por alguna razón es igual, lo ordenaremos por
+el nombre. Para esto debemos implementar la clase **Comparable<Persona>**, <T> puede ser 
+cualquier clase que queramos comparar.
+
+Al hacer esto nos dirá que debemos incorporar el metodo **compareTo(T)**:
 
 {% highlight java %}
-560: 10 50 500
-220: 20 200
----
-50: 50
-0:
----
+    public int compareTo(Persona o) {
+        return 0;
+    }
+{% endhighlight %}
+
+Este es el cuerpo de método, dentro debemos indicar nuestro criterio de ordenación. Este método puede devolver:
+
+- Un negativo si en nuestro orden, this va ANTES que persona
+- Un positivo si en nuestro orden, this va DESPUÉS que persona (o dicho de otra manera, p debería ir ANTES que this)
+- Un 0 si en nuestro orden, no nos importa cuál vaya delante o detrás... consideramos que ambas pueden ocupar la misma posición o son iguales
+
+Por lo tanto rellenando nuestro método:
+
+{% highlight java %}
+    public int compareTo(Persona o) {
+        if(this.getApellidos().compareToIgnoreCase(o.getApellidos())==0){
+            return this.getNombre().compareToIgnoreCase(o.getNombre());
+        }else{
+            return this.getApellidos().compareToIgnoreCase(o.getApellidos());
+        }
+    }
 {% endhighlight %}
 
 Aquí [tiene][Enlace] una propuesta de solución para el problema.Éste código es funcional, resuelve el problema, pero no es eficiente ni mucho menos,
