@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title:  "Acepta el reto: Repartiendo el botin. 238" 
 date:   2015-05-31
@@ -49,4 +49,3 @@ Aquí [tiene][Enlace] una propuesta de solución para el problema.Éste código 
 probablemente existán mejores formas de resolver esto.
 
 [Enlace]: https://github.com/siuxoes/siuxoes.github.io/blob/master/Java-code/RepartiendoElBotin.java
-
