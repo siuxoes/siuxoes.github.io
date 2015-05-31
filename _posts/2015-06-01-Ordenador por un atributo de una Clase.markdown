@@ -92,7 +92,7 @@ Pero si queremos poder ordenadar por otro criterio diferente al definido en la c
 que ésta implemente la clase Comparator<T>, y deberemos definir el método **compare<T,T>**:
 
 {% highlight java %}
-	public class OrdenarPorOtroCriterio implements Comparable<Persona>{
+	public class OrdenarPorOtroCriterio implements Comparator<Persona>{
 		public int compare(Persona o1, Persona o2) {
 			return o1.getDni().compareToIgnoreCase(o2.getDni());
 		}
