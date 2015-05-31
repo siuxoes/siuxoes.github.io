@@ -1,7 +1,7 @@
 title: Siuxoes
-description: Long Form Jekyll theme built with SASS / COMPASS / SUSY
+description: Spanish|English blog about code
 
-url: Siuxoes
+url: http://siuxoes.github.io
 baseurl: ""
 paginate_path: "blog/page:num/"
 permalink: blog/:title/
