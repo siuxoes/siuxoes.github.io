@@ -45,14 +45,6 @@ Tras cada caso de prueba aparecerá una línea con tres guiones (---).
 ---
 {% endhighlight %}
 
-{% highlight java %}
-public static void main(String[] args){
-		String msg = "hola";
-		System.out.println(msg);
-}
-{% endhighlight %}
-
-
 Aquí [tiene][Enlace] una propuesta de solución para el problema.Éste código es funcional, resuelve el problema, pero no es eficiente ni mucho menos,
 probablemente existán mejores formas de resolver esto.
 
