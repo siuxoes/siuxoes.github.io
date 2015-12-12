@@ -87,14 +87,14 @@ an output.
 The first thing you need to notice is that there is a "direct mapping" for every char of the string "mke" to
 its solution "try":
 
-	* The index of 'm' is 12, if you get the value on that index on the second list the result is 't'
-	* The index of 'k' is 10, if you get the value on that index on the second list the result is 'r'
-	* The index of 'e' is 4, if you get the value on that index on the second list the result is 'y'
+* The index of 'm' is 12, if you get the value on that index on the second list the result is 't'
+* The index of 'k' is 10, if you get the value on that index on the second list the result is 'r'
+* The index of 'e' is 4, if you get the value on that index on the second list the result is 'y'
 
 All of this works until you get to the third lane "lhsby", here you need to notice that the char 'y' is not
 in our firt list but it is on second list, so we need to "map" from the second to the first as well:
 
-	* The index of 'y' is 4, if you get the value on that index on the first list the result is 'e'
+* The index of 'y' is 4, if you get the value on that index on the first list the result is 'e'
 
 So now we are able to define our method:
 
