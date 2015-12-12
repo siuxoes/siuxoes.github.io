@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "CodeEval - Try to solve it (JAVA)" 
+title:  "CodeEval - Try to solve it JAVA" 
 date:   2015-12-12
 ---
 
