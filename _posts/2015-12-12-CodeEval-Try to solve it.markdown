@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "CodeEval - Try to solve it" 
+title:  "CodeEval - Try to solve it (JAVA)" 
 date:   2015-12-12
 ---
 
@@ -18,7 +18,7 @@ If you find the task too difficult, get a hint at the bottom of the page.
 
 The first argument is a path to a file. Each row includes a test case with an encoded word:
 
-{% highlight java %}
+{% highlight %}
 mke
 mh
 lhsby
@@ -29,7 +29,7 @@ pm
 
 You have to print the decoded word. 
  
-{% highlight java %}
+{% highlight %}
 try
 to
 solve
@@ -46,52 +46,104 @@ it
 ### Hint:
 
 >! a | b | c | d | e | f | g | h | i | j | k | l | m
+
 >! u | v | w | x | y | z | n | o | p | q | r | s | t 
 
+### My solution:
+
+According to the hint, I created to lists of Strings(It could have been of chars), you may name as you want:
+
 {% highlight java %}
-	public class Persona implements Comparable<Persona>{
-		public int compareTo(Persona o) {
-			return 0;
-		}
-		...
-	}
+    private ArrayList<String> listaP;
+    private ArrayList<String> listaS;
 {% endhighlight %}
 
-Este es el cuerpo de método, dentro debemos indicar nuestro criterio de ordenación. Este método puede devolver:
-
-- Un negativo si en nuestro orden, this va ANTES que persona
-- Un positivo si en nuestro orden, this va DESPUÉS que persona (o dicho de otra manera, p debería ir ANTES que this)
-- Un 0 si en nuestro orden, no nos importa cuál vaya delante o detrás... consideramos que ambas pueden ocupar la misma posición o son iguales
-
-Por lo tanto rellenando nuestro método:
+Now we need to define a method to fill this two lists, in my case I've used a for loop to fill the first one and
+two for loops two fill the second one, like this:
 
 {% highlight java %}
-    public int compareTo(Persona o) {
-        if(this.getApellidos().compareToIgnoreCase(o.getApellidos())==0) {
-            return this.getNombre().compareToIgnoreCase(o.getNombre());
-        } else {
-            return this.getApellidos().compareToIgnoreCase(o.getApellidos());
+    public void llenarListas() {
+       char letra;
+       listaP = new ArrayList<>();
+       for (letra = 'a'; letra <= 'm'; letra++) {
+           listaP.add(Character.toString(letra));
+       }
+       listaS = new ArrayList<>();
+       for (letra = 'u'; letra <= 'z'; letra++) {
+           listaS.add(Character.toString(letra));
+       }
+       for (letra = 'n'; letra <= 't'; letra++) {
+           listaS.add(Character.toString(letra));
+       }
+    }
+{% endhighlight %}
+
+As you see the first loop goes from **A** to **M** and this is all we need for our first list. And for the second
+list we need two loops, one from **U** to **Z** and another from **N** to **t**.
+
+Now that we have our lists ready, we need to define a method to work with this lists and the input to obtain
+an output.
+
+The first thing you need to notice is that there is a "direct mapping" for every char of the string "mke" to
+its solution "try":
+
+	* The index of 'm' is 12, if you get the value on that index on the second list the result is 't'
+	* The index of 'k' is 10, if you get the value on that index on the second list the result is 'r'
+	* The index of 'e' is 4, if you get the value on that index on the second list the result is 'y'
+
+All of this works until you get to the third lane "lhsby", here you need to notice that the char 'y' is not
+in our firt list but it is on second list, so we need to "map" from the second to the first as well:
+
+	* The index of 'y' is 4, if you get the value on that index on the first list the result is 'e'
+
+So now we are able to define our method:
+
+{% highlight java %}
+	public String resolver(String res) {
+        String resultado = "";
+        for (int i = 0; i < res.length(); i++) {
+            int index = listaP.indexOf("" + res.charAt(i));
+            if(index != -1){
+                resultado += listaS.get(index);
+            }else{
+                index = listaS.indexOf("" + res.charAt(i));
+                resultado += listaP.get(index);
+            }
+        }
+        return resultado;
+    }
+{% endhighlight %}
+
+So basically the method iterates all the chars in a String and search for the index of the char in the first list
+and the gets the char from the second list on that index. But if the result is -1 (The char is not in our list), it does
+the opposite thing.
+
+And after its done, it returns the output.
+
+So now we can make our main method from the template CodeEval provides us:
+
+{% highlight java %}
+	 public static void main(String[] args) throws IOException {
+        Main it = new Main();
+        it.llenarListas();
+        File file = new File(args[0]);
+        BufferedReader buffer = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = buffer.readLine()) != null) {
+            line = line.trim();
+            if (line.length() != 0) {
+                System.out.println(it.resolver(line));
+            }
         }
     }
 {% endhighlight %}
 
-Pero si queremos poder ordenadar por otro criterio diferente al definido en la clase por defecto, deberemos crear una clase nueva y 
-que ésta implemente la clase Comparator<T>, y deberemos definir el método **compare<T,T>**:
+So basically our method read from a file given as argument, and reads line by line (when is not an "\n"),
+and outputs the result.
 
-{% highlight java %}
-	public class OrdenarPorOtroCriterio implements Comparator<Persona>{
-		public int compare(Persona o1, Persona o2) {
-			return o1.getDni().compareToIgnoreCase(o2.getDni());
-		}
-	}
-{% endhighlight %}
+I hope it helps you!
 
-Y finalmente, para utilizar estos criterios de ordenación deberemos utulizar:
 
-{% highlight java %}
-		LinkedList<Persona> lista = new LinkedList<>();
-		Collections.sort(lista); // Ordena por apellido y si son iguales, por nombre
-		Collections.sort(lista, new OrdenarPorOtroCriterio()); // Ordenada por dni
-{% endhighlight %}
+PS: Please keep in mind that this code is not optimized, and there are better ways of doing this.
 
 
