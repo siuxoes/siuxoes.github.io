@@ -18,7 +18,7 @@ If you find the task too difficult, get a hint at the bottom of the page.
 
 The first argument is a path to a file. Each row includes a test case with an encoded word:
 
-{% highlight %}
+{% highlight java %}
 mke
 mh
 lhsby
@@ -29,7 +29,7 @@ pm
 
 You have to print the decoded word. 
  
-{% highlight %}
+{% highlight java %}
 try
 to
 solve
